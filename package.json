@@ -1,20 +1,22 @@
 {
-  "name": "vue-chrome-extension-template",
+  "name": "coding-is-love",
   "version": "0.0.1",
-  "description": "vue.js chrome extension template (wcer)",
-  "author": "works.yura@gmail.com",
+  "description": "a vue powered new tab for chrome",
+  "author": "craigp@codehq.co.za",
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "axios": "^0.17.0",
+    "axios": "^0.17.1",
     "element-ui": "^2.0.1",
     "lodash": "^4.17.4",
+    "query-string": "^6.1.0",
     "rss-parser": "^3.4.3",
     "vue": "^2.5.2",
+    "vue-axios": "^2.1.3",
     "vue-meta": "^1.2.0",
     "vue-pouch": "^0.0.22",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.0"
+    "vuex": "^3.0.1"
   },
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
@@ -24,7 +26,7 @@
   "devDependencies": {
     "archiver": "^2.1.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.1",
+    "babel-eslint": "^8.2.6",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
@@ -47,6 +49,7 @@
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^4.7.1",
     "eslint-plugin-vue-libs": "^1.2.1",
     "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^1.1.5",

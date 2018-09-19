@@ -7,7 +7,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 let resolve = dir => path.join(__dirname, '..', 'src', dir)
 module.exports = {
   entry: {
-    tab: resolve('./tab'),
+    // tab: resolve('./tab'),
+    app: resolve('./app'),
     // popup: resolve('./popup'),
     // options: resolve('./options'),
     // content: resolve('./content'), 
@@ -90,7 +91,7 @@ module.exports = {
     ]
   },
   plugins: [
-    htmlPage('home', 'app', ['tab']),
+    htmlPage('home', 'app', ['app']),
     // htmlPage('popup', 'popup', ['popup']),
     // htmlPage('panel', 'panel', ['panel']),
     // htmlPage('devtools', 'devtools', ['devtools']),
