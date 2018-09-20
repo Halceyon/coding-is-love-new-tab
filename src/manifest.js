@@ -10,7 +10,7 @@ module.exports = {
   permissions: [
     //   '<all_urls>',
     //   '*://*/*',
-    'https://www.nasa.gov/rss/*',
+    'https://www.bing.com/*',
     //   'activeTab',
     //   'tabs',
     //   'cookies',

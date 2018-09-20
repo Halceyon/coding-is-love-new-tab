@@ -1,5 +1,6 @@
-import mappings from '../ext/mappings';
 import bus from '../ext/bus';
+import bing from '../plugins/wallpaper-bing';
+
 /* eslint-disable no-console */
 
 export default {
@@ -7,12 +8,10 @@ export default {
   }),
   computed: {},
   created() {
-    bus.sub('nasa', (msg) => {
-      console.log(msg);
-      const nasaItems = mappings.nasa(msg.data);
-      document.body.style.backgroundImage = `url('${nasaItems[1].imageUrl}')`;
+    this.$http.get(bing.url).then((result) => {
+      const backgroundUrl = bing.parse(result.data);
+      document.body.style.backgroundImage = `url('${backgroundUrl}')`;
     });
-
     bus.sub('github.auth.completed', (msg) => {
       console.log(msg);
       const auth = {
