@@ -1,5 +1,6 @@
 import bus from '../ext/bus';
 import bing from '../plugins/wallpaper-bing';
+import asana from './components/asana.vue';
 
 /* eslint-disable no-console */
 
@@ -34,4 +35,7 @@ export default {
   },
   mounted() { },
   methods: {},
+  components: {
+    asana,
+  },
 };

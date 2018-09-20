@@ -11,6 +11,7 @@ module.exports = {
     //   '<all_urls>',
     //   '*://*/*',
     'https://www.bing.com/*',
+    'https://app.asana.com/*',
     //   'activeTab',
     //   'tabs',
     //   'cookies',

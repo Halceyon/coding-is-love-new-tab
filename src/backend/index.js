@@ -1,15 +1,16 @@
 import queryString from 'query-string';
-import nasa from '../ext/nasa';
 import bus from '../ext/bus';
 import asana from '../ext/asana';
 import github from '../ext/github';
 
+// allowing console for background page
 /* eslint-disable no-console */
 
+// handle oauth connections
 const connect = (provider) => {
   if (provider.token === null) {
     chrome.identity.launchWebAuthFlow({
-      url: provider.url,
+      url: provider.authUrl,
       interactive: true,
     }, (redirectURL) => {
       const search = redirectURL.substring(redirectURL.indexOf('?'));
@@ -24,22 +25,12 @@ const connect = (provider) => {
   console.log(provider.url);
 };
 
-const init = () => {
+bus.sub('github.auth.requested', () => {
   connect(github);
-  connect(asana);
-};
-
-const refresh = () => {
-  nasa.get().then((feed) => {
-    console.log(feed);
-    bus.pub('nasa', feed.items);
-  });
-};
-
-bus.sub('page.loaded', () => {
-  init();
-  refresh();
 });
 
-init();
+bus.sub('asana.auth.requested', () => {
+  connect(asana);
+});
+
 console.log('background loaded');
