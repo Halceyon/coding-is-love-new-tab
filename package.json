@@ -9,7 +9,7 @@
     "@mdi/font": "^2.7.94",
     "axios": "^0.17.1",
     "element-ui": "^2.0.1",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.21",
     "query-string": "^6.1.0",
     "rss-parser": "^3.4.3",
     "vue": "^2.5.2",
