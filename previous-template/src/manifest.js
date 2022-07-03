@@ -1,7 +1,5 @@
-
 module.exports = {
   name: 'coding is love',
-  key: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhSIT1Xc+34V75IWGSgnL3/HLhU4zkxqjxfhaks6ZXMgRsD0S/OVRZcVynQdXk6Uc0qQqVM/0aMZBUHBuSXeZqLg+Oi38S6I1R70txtkJ54xyqRBErcWZq9SSLiq8rbo8nb361Gat7J/ILiSwXZCDPYNH+ygUOvizokTdKs4DBH+UN17MikylOcIl+gLPcXRHt0XgjyIFLV4/44aA/GcisCnoxBhBTHasJ73Ylq+Vq9ZJ6g4HCUXjKa4NYlB/wXSwHUJal5znVayy3dP4DreJcjxrG1yQMgHnwF4zPCe+WskgTHRwoappwfBxBpezpkYUtX2nKFv56JKfScfuK7goXQIDAQAB',
   version: '0.0.1',
   description: 'a vue powered new tab for chrome',
   author: 'craigp@codehq.co.za',

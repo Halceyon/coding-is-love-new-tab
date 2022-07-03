@@ -1,4 +1,29 @@
-# coding is love
-a vue powered new tab for chrome
+# coding-is-love-new-tab
 
-Special thanks to https://github.com/YuraDev/vue-chrome-extension-template for their awesome boilerplate!
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your unit tests
+```
+npm run test:unit
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

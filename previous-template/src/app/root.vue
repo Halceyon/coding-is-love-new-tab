@@ -10,8 +10,10 @@
         </v-footer>
     </v-app>
 </template>
+
 <script src="./app-script.js">
 </script>
+
 <style>
 body,
 html {
