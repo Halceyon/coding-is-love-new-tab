@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "coding-is-love",
-    "description": "chrome extension",
+    "name": "coding is love",
+    "description": "a vue powered new tab for chrome",
     "version": "0.0.1",
     "background": {
         "service_worker": "/background.js"
