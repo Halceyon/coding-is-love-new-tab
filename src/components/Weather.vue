@@ -1,6 +1,12 @@
 <template>
-  <div v-if="weatherData">
-    {{ current.air_temperature }}
+  <div>
+    <div v-if="weatherData">
+      <span class="weather-temp">{{ current.air_temperature }}</span>
+      {{ current.air_temperature }} °C
+    </div>
+    <div v-else>
+      <v-mdi name="mdi-weather-cloudy-clock"></v-mdi>
+    </div>
   </div>
 </template>
 
@@ -20,6 +26,15 @@ export default {
       const { data } = this.weatherData.properties.timeseries[0];
       return data.instant.details;
       //  "instant": { "details": { "air_pressure_at_sea_level": 1021.1, "air_temperature
+    },
+    icon() {
+      const { data } = this.weatherData.properties.timeseries[0];
+      switch (data.next_1_hours.summary.symbol_code) {
+        case 's01d':
+          return this.mdiWeatherPouring;
+        default:
+          return 'mdi-weather-sunny-off';
+      }
     },
   },
   methods: {
