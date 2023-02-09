@@ -13,6 +13,8 @@
 <script>
 import github from '../components/github';
 
+import './site.css';
+
 export default {
   name: 'optionsView',
   mixins: [github],
@@ -30,7 +32,6 @@ export default {
       console.debug(this.githubToken);
       localStorage.setItem('GITHUB_TOKEN', this.githubToken);
       this.$root.$emit('token-updated');
-      window.alert('Saved');
     },
   },
 };

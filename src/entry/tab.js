@@ -4,6 +4,7 @@ import VueAxios from 'vue-axios';
 import VueMdijs from 'vue-mdijs';
 import { mdiWeatherPouring, mdiWeatherCloudyClock, mdiWeatherSunnyOff } from '@mdi/js';
 import App from '../view/tab.vue';
+import vuetify from '../plugins/vuetify';
 
 VueMdijs.add({ mdiWeatherPouring, mdiWeatherCloudyClock, mdiWeatherSunnyOff });
 Vue.use(VueMdijs);
@@ -12,5 +13,6 @@ Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 
 new Vue({
+  vuetify,
   render: (h) => h(App),
 }).$mount('#app');

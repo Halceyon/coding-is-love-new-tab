@@ -10,6 +10,7 @@
     "dev": "vue-cli-service  --env.NODE_ENV=development build-watch --mode development"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "@mdi/js": "^6.9.96",
     "@octokit/core": "^4.2.0",
     "axios": "^0.27.2",
@@ -18,6 +19,7 @@
     "vue": "^2.6.11",
     "vue-axios": "^3.4.1",
     "vue-mdijs": "^0.4.3",
+    "vuetify": "^2.6.0",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
@@ -34,6 +36,7 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
     "vue-cli-plugin-chrome-extension-cli": "~1.1.4",
+    "vue-cli-plugin-vuetify": "~2.5.8",
     "vue-template-compiler": "^2.6.11"
   }
 }

@@ -1,32 +1,36 @@
 <template>
-  <section>
-    <div class="wrapper">
-        <header class="page-header">
-          {{ wallpaper.title }}
-        </header>
-        <main class="page-body">
-          <Weather />
-          <GitHub v-if="hasGitHubToken" />
-        </main>
-        <footer class="page-footer">
-          <a :href="wallpaper.copyrightlink">
-            {{ wallpaper.copyright }}
-          </a>
-        </footer>
-    </div>
-      <!-- <div class="wallpaper-credit">
-        {{ wallpaper.title }}
+  <v-app>
+    <section>
+      <div class="wrapper">
+          <header class="page-header">
+            {{ wallpaper.title }}
+          </header>
+          <main class="page-body">
+            <Weather />
+            <GitHub v-if="hasGitHubToken" />
+          </main>
+          <footer class="page-footer">
+            <a :href="wallpaper.copyrightlink">
+              {{ wallpaper.copyright }}
+            </a>
+          </footer>
       </div>
-      <footer class="page-footer">
+        <!-- <div class="wallpaper-credit">
+          {{ wallpaper.title }}
+        </div>
+        <footer class="page-footer">
 
-      </footer> -->
-  </section>
+        </footer> -->
+    </section>
+  </v-app>
 </template>
 
 <script>
 import GitHub from '../components/GitHub.vue';
 import Weather from '../components/Weather.vue';
 import github from '../components/github';
+
+import './site.css';
 
 export default {
   name: 'tabView',

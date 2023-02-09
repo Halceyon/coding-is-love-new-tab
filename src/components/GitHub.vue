@@ -1,75 +1,60 @@
 <template>
-   <div class="container">
+  <div class="container">
+    <v-dialog v-model="dialog" max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Select Repositories</span>
+          </v-card-title>
+          <v-card-text>
+            <v-form ref="form" v-model="valid">
+              <v-select
+                v-model="selectedRepos"
+                :items="repos"
+                item-text="name" item-value="id"
+                :rules="[v => !!v || 'Item is required']" label="Repositories" multiple>
+              </v-select>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="dialog = false">Cancel</v-btn>
+            <v-btn color="blue darken-1" text @click="getPullRequests">Submit</v-btn>
+          </v-card-actions>
+        </v-card>
+    </v-dialog>
     <div class="row">
       <div class="col-sm-12">
-        <h1>GitHub Pull Requests</h1>
-        <div v-if="loading">
-          <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-          <p>Loading...</p>
-        </div>
-        <div v-else>
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true"
-          >
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="form-group">
-                      <select class="form-control" v-model="selectedRepos" multiple>
-                        <option v-for="repo in repos" :key="repo.id" :value="repo.id">
-                          {{repo.name}}
-                        </option>
-                      </select>
-                      <button class="btn btn-primary">
-                        Get Pull Requests
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                    @click="getPullRequests"
-                    data-dismiss="modal"
+        <v-row>
+          <v-col>
+            <v-card class="transparent-card">
+              <v-card-title>
+                <span class="headline">Pull Requests</span>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="secondary"
+                    dark
+                    @click="dialog = true"
                   >
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button type="button" class="btn btn-primary" data-toggle="modal"
-            data-target="#exampleModal">
-            <i class="mdi mdi-filter"></i> Filter
-          </button>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Repository</th>
-                <th>Pull Request</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(pullRequest, index) of pullRequests" :key="index">
-                <td>{{pullRequest.repo}}</td>
-                <td>{{pullRequest.title}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                    <i class="mdi mdi-filter"></i>
+                  </v-btn>
+              </v-card-title>
+              <v-card-text>
+                <v-data-table
+                  :headers="headers"
+                  :items="pullRequests"
+                  item-key="id"
+                  :search="search"
+                  class="elevation-1">
+                  <template v-slot:item.user="{ item }">
+                    <v-avatar size="30">
+                      <img :src="item.user.avatar_url" alt="avatar">
+                    </v-avatar>
+                  </template>
+                </v-data-table>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
       </div>
     </div>
   </div>
@@ -83,10 +68,18 @@ export default {
   mixins: [github],
   data() {
     return {
+      dialog: false,
       loading: true,
+      headers: [
+        { text: 'User', value: 'user' },
+        { text: 'Repository', value: 'repo' },
+        { text: 'Title', value: 'title' },
+      ],
       pullRequests: [],
       repos: [],
+      search: '',
       selectedRepos: [],
+      valid: true,
     };
   },
   async mounted() {
@@ -98,7 +91,7 @@ export default {
       console.debug(data);
       this.user = data;
       try {
-      // get the repos
+        // get the repos
         const repos = await octokit.request('GET /user/repos');
         this.repos = repos.data;
         this.loading = false;
@@ -112,6 +105,7 @@ export default {
      * Executes getPullRequests for each selected repo
      */
     async getPullRequests() {
+      this.dialog = false;
       const auth = this.getGithubToken();
       const octokit = new Octokit({ auth });
       // get the pull requests for each repo
@@ -123,13 +117,11 @@ export default {
             repo: repo.name,
           });
           // add the pull request to the array
-          return prs.data.map((pr) => ({
-            repo: repo.name,
-            title: pr.title,
-          }));
+          return prs.data;
         }),
       );
       this.pullRequests = requests.flat();
+      console.debug(this.pullRequests);
     },
   },
 };
