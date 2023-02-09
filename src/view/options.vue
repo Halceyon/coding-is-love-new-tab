@@ -1,16 +1,37 @@
 <template>
   <div class="main_app">
-    <h1>Hello {{msg}}</h1>
+    <form @submit.prevent="saveGithubToken">
+      <div class="form-group">
+        <label>GitHub Personal Access Token</label>
+        <input type="text" v-model="githubToken" class="form-control" placeholder="Enter Token" />
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
   </div>
 </template>
 
 <script>
+import github from '../components/github';
+
 export default {
   name: 'optionsView',
+  mixins: [github],
   data() {
     return {
-      msg: 'world',
+      githubToken: '',
     };
+  },
+  mounted() {
+    this.githubToken = this.getGithubToken();
+    console.debug(this.githubToken);
+  },
+  methods: {
+    saveGithubToken() {
+      console.debug(this.githubToken);
+      localStorage.setItem('GITHUB_TOKEN', this.githubToken);
+      this.$root.$emit('token-updated');
+      window.alert('Saved');
+    },
   },
 };
 

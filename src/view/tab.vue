@@ -6,6 +6,7 @@
         </header>
         <main class="page-body">
           <Weather />
+          <GitHub v-if="hasGitHubToken" />
         </main>
         <footer class="page-footer">
           <a :href="wallpaper.copyrightlink">
@@ -23,11 +24,15 @@
 </template>
 
 <script>
+import GitHub from '../components/GitHub.vue';
 import Weather from '../components/Weather.vue';
+import github from '../components/github';
 
 export default {
   name: 'tabView',
+  mixins: [github],
   components: {
+    GitHub,
     Weather,
   },
   data() {
@@ -57,7 +62,7 @@ export default {
     const url = 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US';
     const response = await this.$http.get(url);
     this.wallpapers = response.data.images;
-    console.debug(this.wallpapers);
+    console.debug(this.wallpapers, this.hasGitHubToken);
   },
 };
 
@@ -82,11 +87,9 @@ section {
   color: #2c3e50;
 }
 .wrapper {
-  min-height: 100%;
+  height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
-}
-.wallpaper-credit {
 }
 .page-header,
 .page-footer {
