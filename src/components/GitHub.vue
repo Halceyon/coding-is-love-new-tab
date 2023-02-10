@@ -16,9 +16,12 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
             <v-btn color="blue darken-1" text @click="dialog = false">Cancel</v-btn>
-            <v-btn color="blue darken-1" text @click="getPullRequests">Submit</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="blue darken-1" text @click="getPullRequests(selectedRepos);dialog = false;">
+              Submit
+            </v-btn>
           </v-card-actions>
         </v-card>
     </v-dialog>
@@ -61,7 +64,7 @@
 </template>
 
 <script>
-import { Octokit } from '@octokit/core';
+import { mapActions, mapState } from 'vuex';
 import github from './github';
 
 export default {
@@ -75,54 +78,22 @@ export default {
         { text: 'Repository', value: 'repo' },
         { text: 'Title', value: 'title' },
       ],
-      pullRequests: [],
-      repos: [],
       search: '',
       selectedRepos: [],
       valid: true,
     };
   },
+  computed: {
+    ...mapState('github', ['user', 'repos', 'pullRequests']),
+  },
   async mounted() {
     const auth = this.getGithubToken();
-    console.debug(auth);
     if (auth) {
-      const octokit = new Octokit({ auth });
-      const { data } = await octokit.request('/users/Halceyon/repos');
-      console.debug(data);
-      this.user = data;
-      try {
-        // get the repos
-        const repos = await octokit.request('GET /user/repos');
-        this.repos = repos.data;
-        this.loading = false;
-      } catch (err) {
-        console.error(err);
-      }
+      await this.getRepos();
     }
   },
   methods: {
-    /**
-     * Executes getPullRequests for each selected repo
-     */
-    async getPullRequests() {
-      this.dialog = false;
-      const auth = this.getGithubToken();
-      const octokit = new Octokit({ auth });
-      // get the pull requests for each repo
-      const requests = await Promise.all(
-        this.selectedRepos.map(async (repoId) => {
-          const repo = this.repos.find((r) => r.id === repoId);
-          const prs = await octokit.request('GET /repos/:owner/:repo/pulls', {
-            owner: repo.owner.login,
-            repo: repo.name,
-          });
-          // add the pull request to the array
-          return prs.data;
-        }),
-      );
-      this.pullRequests = requests.flat();
-      console.debug(this.pullRequests);
-    },
+    ...mapActions('github', ['getPullRequests', 'getRepos']),
   },
 };
 </script>

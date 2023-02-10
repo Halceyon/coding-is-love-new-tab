@@ -6,7 +6,6 @@ export default {
   },
   methods: {
     getGithubToken() {
-      console.debug(localStorage.getItem('GITHUB_TOKEN'));
       return localStorage.getItem('GITHUB_TOKEN');
     },
   },

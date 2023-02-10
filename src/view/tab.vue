@@ -1,5 +1,14 @@
 <template>
   <v-app>
+    <v-app-bar app>
+      <v-spacer></v-spacer>
+      <v-btn icon @click="$msal.loginPopup">
+        <v-icon>{{ mdiMicrosoft }}</v-icon>
+      </v-btn>
+      <v-btn v-if="isLoggedIn" icon @click="$msal.logoutRedirect">
+        <v-icon>{{ mdiAccount }}</v-icon>
+      </v-btn>
+    </v-app-bar>
     <section>
       <div class="wrapper">
           <header class="page-header">
@@ -8,6 +17,7 @@
           <main class="page-body">
             <Weather />
             <GitHub v-if="hasGitHubToken" />
+            {{ user }}
           </main>
           <footer class="page-footer">
             <a :href="wallpaper.copyrightlink">
@@ -26,6 +36,7 @@
 </template>
 
 <script>
+import { mdiMicrosoft, mdiAccount } from '@mdi/js';
 import GitHub from '../components/GitHub.vue';
 import Weather from '../components/Weather.vue';
 import github from '../components/github';
@@ -41,6 +52,8 @@ export default {
   },
   data() {
     return {
+      mdiMicrosoft,
+      mdiAccount,
       wallpapers: [],
     };
   },
@@ -48,6 +61,22 @@ export default {
     backgroundUrl() {
       const { wallpaper } = this;
       return `https://www.bing.com${wallpaper.url}`;
+    },
+    isLoggedIn() {
+      return this.$msal.data.isAuthenticated;
+    },
+    user() {
+      let user = {};
+      if (this.$msal.data.isAuthenticated) {
+        user = {
+          ...this.$msal.user,
+          profile: {},
+        };
+        if (this.$msal.graph && this.$msal.graph.profile) {
+          user.profile = this.msal.graph.profile;
+        }
+      }
+      return user;
     },
     wallpaper() {
       const { wallpapers } = this;
@@ -62,11 +91,22 @@ export default {
       document.body.style.backgroundImage = `url(${this.backgroundUrl})`;
     },
   },
-  async created() {
+  async mounted() {
+    console.debug(this.isLoggedIn);
+    if (!this.isLoggedIn) {
+      await this.$msal.loginPopup();
+    }
     const url = 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US';
     const response = await this.$http.get(url);
     this.wallpapers = response.data.images;
-    console.debug(this.wallpapers, this.hasGitHubToken);
+    // await this.$msal.loginPopup();
+    // this.$msal.handleRedirectPromise()
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
   },
 };
 

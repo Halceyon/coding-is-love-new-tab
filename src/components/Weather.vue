@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { mdiWeatherPouring, mdiWeatherSunny } from '@mdi/js';
+
 export default {
   name: 'Weather',
   data() {
@@ -31,9 +33,9 @@ export default {
       const { data } = this.weatherData.properties.timeseries[0];
       switch (data.next_1_hours.summary.symbol_code) {
         case 's01d':
-          return this.mdiWeatherPouring;
+          return mdiWeatherPouring;
         default:
-          return 'mdi-weather-sunny-off';
+          return mdiWeatherSunny;
       }
     },
   },
@@ -45,10 +47,8 @@ export default {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async (position) => {
           const weatherUrl = this.generateUrl(position.coords.latitude, position.coords.longitude);
-          console.debug(weatherUrl);
           const response = await this.$http.get(weatherUrl);
           this.weatherData = response.data;
-          console.debug(this.weatherData);
         });
       }
     },
