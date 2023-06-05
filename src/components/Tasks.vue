@@ -27,6 +27,7 @@ export default {
     // Get the token
     this.$msal.acquireTokenSilent().then((token) => {
       // Use the token to get the tasks
+      // eslint-disable-next-line no-undef
       graph
         .tasks(token)
         .get()
